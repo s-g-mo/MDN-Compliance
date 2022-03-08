@@ -1,0 +1,9 @@
+figs
+data
+*.pyc
+*__pycache__
+*.DS_Store
+*.pkl
+*.SAC
+*.so
+*.png
