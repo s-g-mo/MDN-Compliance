@@ -1,5 +1,6 @@
 MDN Compliance Inversion
 Stephen Mosher (2022)
+
 INTRODUCTION
 
 This repository consists of several scripts that I wrote during my time as PhD student at the University of Ottawa, in Canada. These scripts ultimately allow one to train one, or several, mixture density networks (MDNs) which can then be used to invert normalized compliance signals η(ω) recorded by ocean-bottom seismometers (OBSs). I have done my best to thoroughly comment and document all the code contained in this repository, such that anyone should be able to use/adapt this code to train their own MDN to invert η(ω) signals recorded by any OBS they wish. Below I provide a brief overview and description of all the components. If you use this code, in part or in full, please cite either one of my publications listed below ([1,2]), which are studies I conducted using this technique. Further details on this method or how I used it can be found in those publications.
@@ -8,12 +9,12 @@ REQUIREMENTS
 
 This code requires the following packages:
 
-NumPy
-SciPy
-ObsPy
-Matplotlib
-TensorFlow
-mdn (https://github.com/cpmpercussion/keras-mdn-layer)
+-NumPy
+-SciPy
+-ObsPy
+-Matplotlib
+-TensorFlow
+-mdn (https://github.com/cpmpercussion/keras-mdn-layer)
 
 In addition, there is a Fortran95 script involved (raydep_ft.f95), which needs to be compiled on your machine. In particular, the code related to that script was written with F2PY. F2PY is a Fortran to Python interface generator, from NumPy, that provides a connection between the two languages. In other words, it allows one to write functions in Fortran77/90/95, which, once compiled with F2PY, become callable as Python functions. The easiest way to accomplish this is to run the following in your terminal:
 
@@ -50,11 +51,11 @@ Step 2 - Machine Learning Tasks
 This step is the heart and soul of this project. The scripts and associated functions that facilitate these tasks are found in the main directory, MDN_compliance. There are 5 scripts and they should be run in the following order. Most of the names are self-explanatory (I think), but I'll describe a few important aspects below. Again, these are all thoroughly documented in the comments in the actual scripts themselves, and copious details on what is going on here can be found in [1] and [2] below.
 
 build_stn_db.py
-This script builds a station database to use in conjunction with other aspects of this project. In particular, since the frequency band over which η(ω) is measurable is both depth-dependant, and depends on γ(ω), several quantities need to be specified for every station/target water depth you wish to work with. If you don't have real signal statistics for η(ω) and γ(ω), or if you wish to work with purely synthetic data, then you can put your assumptions on statistics in here, along with names for dummy stations.
+-This script builds a station database to use in conjunction with other aspects of this project. In particular, since the frequency band over which η(ω) is measurable is both depth-dependant, and depends on γ(ω), several quantities need to be specified for every station/target water depth you wish to work with. If you don't have real signal statistics for η(ω) and γ(ω), or if you wish to work with purely synthetic data, then you can put your assumptions on statistics in here, along with names for dummy stations.
 
 build_train_test_data.py
-This script builds training and testing data for every station/target water depth you wish to work with. In principle, a single MDN could be trained to invert η(ω) for any station, deployed at any water depth, but this is a much move involved problem (discussed in [1] and [2] below). Therefore, the approach taken in this software is to build training data for every MDN you wish to consider.
-This script is where the forward code for computing η(ω) from randomly generated Earth models gets called. All the code associated with the forward computation is contained in the forward_funcs directory.
+-This script builds training and testing data for every station/target water depth you wish to work with. In principle, a single MDN could be trained to invert η(ω) for any station, deployed at any water depth, but this is a much move involved problem (discussed in [1] and [2] below). Therefore, the approach taken in this software is to build training data for every MDN you wish to consider.
+-This script is where the forward code for computing η(ω) from randomly generated Earth models gets called. All the code associated with the forward computation is contained in the forward_funcs directory.
 
 prep_MDN_data.py
 This script performs feature scaling on all training/testing data, and prepares data to be passed directly to an MDN for training.
@@ -81,7 +82,7 @@ OBStools
 ATaCR
   - Helen Janiszewski
   - https://github.com/helenjanisz/ATaCR
-- Helen A Janiszewski, James B Gaherty, Geoffrey A Abers, Haiying Gao, Zachary C Eilon, Amphibious surface-wave phase-velocity measurements of the Cascadia subduction zone, Geophysical Journal International, Volume 217, Issue 3, June 2019, Pages 1929–1948, https://doi.org/10.1093/gji/ggz051
+  - Helen A Janiszewski, James B Gaherty, Geoffrey A Abers, Haiying Gao, Zachary C Eilon, Amphibious surface-wave phase-velocity measurements of the Cascadia subduction zone, Geophysical Journal International, Volume 217, Issue 3, June 2019, Pages 1929–1948, https://doi.org/10.1093/gji/ggz051
 
 Compliance Calculation Software
   - Wayne Crawford
