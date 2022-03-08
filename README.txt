@@ -2,11 +2,11 @@ MDN Compliance Inversion
 Stephen Mosher (2022)
 
 INTRODUCTION
-
+-------------------------------------
 This repository consists of several scripts that I wrote during my time as PhD student at the University of Ottawa, in Canada. These scripts ultimately allow one to train one, or several, mixture density networks (MDNs) which can then be used to invert normalized compliance signals η(ω) recorded by ocean-bottom seismometers (OBSs). I have done my best to thoroughly comment and document all the code contained in this repository, such that anyone should be able to use/adapt this code to train their own MDN to invert η(ω) signals recorded by any OBS they wish. Below I provide a brief overview and description of all the components. If you use this code, in part or in full, please cite either one of my publications listed below ([1,2]), which are studies I conducted using this technique. Further details on this method or how I used it can be found in those publications.
 
 REQUIREMENTS
-
+-------------------------------------
 This code requires the following packages:
 
 -NumPy
@@ -23,15 +23,17 @@ python -m numpy.f2py -c raydep_ft.f95 -m raydep_ft
 The code will not run without this step.
 
 SOME NOTES AND ACKNOWLEDGEMENTS
-
+-------------------------------------
 Before describing the code and its various modules I need to make a few acknowledgements.
 
-Significant portions of the code which compute compliance η(ω) and coherence γ(ω) curves from OBS data were not written by me and come directly from OBStools, developed and maintained by Pascal Audet, available at (https://github.com/nfsi-canada/OBStools). OBStools is itself a Python implementation of ATaCR, MATLAB code originally developed by Helen Janiszewski, available at (https://github.com/helenjanisz/ATaCR). OBStools and ATaCR are sophisticated suites of tools for processing and working with data recorded by OBSs. References are included below and in the code.
-The portion of the code which forward computes η(ω) from synthetic Earth structures originally came from Wayne Crawford. Wayne's software is written in MATLAB and I translated it into Python to facilitate a fully Python implementation of this software. While translating Wayne's code, I made a few modifications of my own, most notably to the gravd function (details in [2]). I also translated the main function that performs the actual computation of η(ω) from synthetic Earth structures, raydep, from MATLAB to Fortran95. If compiled with F2PY from NumPy as noted above, then the function becomes callable as a Python function, and it provides a substantial speed up when forward computing η(ω). This is especially necessary in this application, where one needs to forward model η(ω) for 100,000+ training examples. References are included below and in the code.
-Finally, regarding MDNs and the actual machine learning portion of this software, I used TensorFlow. However, at the time I was working on this project, TensorFlow did not have support for MDN layers in a neural network. Therefore, I used the mdn package written by Charles Martin (https://github.com/cpmpercussion/keras-mdn-layer). This package allows one to implement simple MDN layers in TensorFlow. References are included below and in the code.
+1. Significant portions of the code which compute compliance η(ω) and coherence γ(ω) curves from OBS data were not written by me and come directly from OBStools, developed and maintained by Pascal Audet, available at (https://github.com/nfsi-canada/OBStools). OBStools is itself a Python implementation of ATaCR, MATLAB code originally developed by Helen Janiszewski, available at (https://github.com/helenjanisz/ATaCR). OBStools and ATaCR are sophisticated suites of tools for processing and working with data recorded by OBSs. References are included below and in the code.
+
+2. The portion of the code which forward computes η(ω) from synthetic Earth structures originally came from Wayne Crawford. Wayne's software is written in MATLAB and I translated it into Python to facilitate a fully Python implementation of this software. While translating Wayne's code, I made a few modifications of my own, most notably to the gravd function (details in [2]). I also translated the main function that performs the actual computation of η(ω) from synthetic Earth structures, raydep, from MATLAB to Fortran95. If compiled with F2PY from NumPy as noted above, then the function becomes callable as a Python function, and it provides a substantial speed up when forward computing η(ω). This is especially necessary in this application, where one needs to forward model η(ω) for 100,000+ training examples. References are included below and in the code.
+
+3. Finally, regarding MDNs and the actual machine learning portion of this software, I used TensorFlow. However, at the time I was working on this project, TensorFlow did not have support for MDN layers in a neural network. Therefore, I used the mdn package written by Charles Martin (https://github.com/cpmpercussion/keras-mdn-layer). This package allows one to implement simple MDN layers in TensorFlow. References are included below and in the code.
 
 SOFTWARE STRUCTURE
-
+-------------------------------------
 This software is a set of Python scripts which can be grouped into the following categories, some of which are optional.
 
 Step 1 - Computation of η(ω) and γ(ω) for real OBSs - OPTIONAL
@@ -67,7 +69,7 @@ Step 0 - Data Acquisition - OPTIONAL
 I've set up this repository so that you can clone it (or download the code), run the previously described scripts with all the default parameters, in the order I described, and reproduce the main inversion result for OBS station A02W from my publication listed below [1]. If you want to do this, then I would advise also cloning (or downloading) my request_data repository (https://github.com/s-g-mo/request_data). You should be able to run that with the default parameters and obtain all the data necessary to reproduce my results. You can then work through the above code to reproduce the result.
 
 REFERENCES/CITATIONS
-
+-------------------------------------
 Publications
 
 [1] Mosher, S. G., Audet, P., & Gosselin, J. M. (2021). Shear-wave velocity structure of sediments on Cascadia's continental margin from probabilistic inversion of seafloor compliance data. Geochemistry, Geophysics, Geosystems, 22, e2021GC009720. https://doi.org/10.1029/2021GC009720
@@ -82,7 +84,8 @@ OBStools
 ATaCR
   - Helen Janiszewski
   - https://github.com/helenjanisz/ATaCR
-  - Helen A Janiszewski, James B Gaherty, Geoffrey A Abers, Haiying Gao, Zachary C Eilon, Amphibious surface-wave phase-velocity measurements of the Cascadia subduction zone, Geophysical Journal International, Volume 217, Issue 3, June 2019, Pages 1929–1948, https://doi.org/10.1093/gji/ggz051
+  - Helen A Janiszewski, James B Gaherty, Geoffrey A Abers, Haiying Gao, Zachary C Eilon, Amphibious surface-wave phase-velocity measurements of the Cascadia
+    subduction zone, Geophysical Journal International, Volume 217, Issue 3, June 2019, Pages 1929–1948, https://doi.org/10.1093/gji/ggz051
 
 Compliance Calculation Software
   - Wayne Crawford
