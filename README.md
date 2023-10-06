@@ -16,7 +16,7 @@ This code requires the following packages:
 - TensorFlow
 - mdn (https://github.com/cpmpercussion/keras-mdn-layer)
 
-In addition, there is a Fortran95 script involved (raydep_ft.f95), which needs to be compiled on your machine. In particular, the code related to that script was written with F2PY. F2PY is a Fortran to Python interface generator, from NumPy, that provides a connection between the two languages. In other words, it allows one to write functions in Fortran77/90/95, which, once compiled with F2PY, become callable as Python functions. The easiest way to accomplish this is to run the following in your terminal:
+In addition, there is a Fortran95 script involved (*raydep_ft.f95*), which needs to be compiled on your machine. In particular, the code related to that script was written with F2PY. F2PY is a Fortran to Python interface generator, from NumPy, that provides a connection between the two languages. In other words, it allows one to write functions in Fortran77/90/95, which, once compiled with F2PY, become callable as Python functions. The easiest way to accomplish this is to run the following in your terminal:
 
 ```
 python -m numpy.f2py -c raydep_ft.f95 -m raydep_ft
@@ -44,9 +44,9 @@ This step is optional. It is only required if you desire to invert normalized co
 
 The scripts and associated functions that facilitate this task are found in the directory named η_γ_computation. Within that directory, there are 3 scripts and they should be run in the following order:
 
-*compute_daily_spectral_quantities.py*
-*compute_daily_η_γ.py*
-*compute_stn_avg_η_γ.py*
+- *compute_daily_spectral_quantities.py*
+- *compute_daily_η_γ.py*
+- *compute_stn_avg_η_γ.py*
 
 The names of these scripts are self-descriptive, and their function is thoroughly documented in their comments. For copious details on what is going on here refer to [1] and [2] below.
 
